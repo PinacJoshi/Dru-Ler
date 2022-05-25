@@ -14,4 +14,4 @@ if __name__ == "__main__":
 	process.start()
 	while(not tor.checktorcon()):
 		pass
-	print("confirmed bitches")
+	print("Tor is up and running")
