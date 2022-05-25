@@ -1,11 +1,8 @@
-from stem import Signal
-from stem.control import Controller
+import tor
 import time
+import multiprocessing as mp
 
-controller = Controller.from_port(port=9051)
-controller.authenticate(password="yourpass")
-print(controller.get_info("status/circuit-established"))
-while(str(controller.get_info("status/circuit-established"))=="0"):
-  time.sleep(0.5)
-
-#begin
+def starttor():
+  global torhash
+  torhash = tor.gethash()
+  tor.tor(torhash)
