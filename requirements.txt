@@ -1,4 +1,0 @@
-beautiful
-stem
-requests
-requests[socks]
