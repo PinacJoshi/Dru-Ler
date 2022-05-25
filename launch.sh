@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # packages is an array of required packages
-declare -a packages=("tor" "python3")
+declare -a packages=("tor" "python3" "python3-pip")
 for REQUIRED_PKG in "${packages[@]}"
 do
 PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
