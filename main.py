@@ -1,6 +1,8 @@
 import tor
 import time
 import multiprocessing as mp
+import threading
+import signal
 #file: color.py
 from color import printColor as pc
 #file: session.py
@@ -12,17 +14,21 @@ def starttor():
   tor.tor(torhash)
 process = mp.Process(target=starttor)
 
+def handle(signal,frame):
+	print("exiting gracefully")
+	process.exit()
+
+
 if __name__ == "__main__":
 
-	try:
-		process.start()
-		while(not tor.checktorcon()):
-			pass
-		pc("tor is up and running.","green")
-		#starting a session
-		session=cs()
-		pc(session.get("https://check.torproject.org/api/ip").text,"bold")
-		#add functionality down below
-	except KeyboardInterrupt:
-		print("exiting gracefully")
-		process.terminate()
+	process.start()
+	signal.signal(signal.SIGINT,handle)
+	listener = threading.Event()
+	listener.wait()
+	while(not tor.checktorcon()):
+		pass
+	pc("tor is up and running.","green")
+	#starting a session
+	session=cs()
+	pc(session.get("https://check.torproject.org/api/ip").text,"bold")
+	#add functionality down below
